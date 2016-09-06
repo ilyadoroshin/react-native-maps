@@ -17,7 +17,11 @@
 // TODO: don't use MK region?
 @property (nonatomic, assign) MKCoordinateRegion initialRegion;
 @property (nonatomic, copy) RCTBubblingEventBlock onMarkerPress;
+@property (nonatomic, copy) RCTDirectEventBlock onRegionChange;
+@property (nonatomic, copy) RCTDirectEventBlock onRegionChangeComplete;
 
-- (void)didTapMarker:(GMSMarker *)marker;
+- (BOOL)didTapMarker:(GMSMarker *)marker;
+- (void)didChangeCameraPosition:(GMSCameraPosition *)position;
+- (void)idleAtCameraPosition:(GMSCameraPosition *)position;
 
 @end

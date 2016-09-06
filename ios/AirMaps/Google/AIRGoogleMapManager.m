@@ -45,11 +45,22 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_VIEW_PROPERTY(initialRegion, MKCoordinateRegion)
 RCT_EXPORT_VIEW_PROPERTY(onMarkerPress, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onRegionChange, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onRegionChangeComplete, RCTDirectEventBlock)
 
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
   AIRGoogleMap *googleMapView = (AIRGoogleMap *)mapView;
-  [googleMapView didTapMarker:marker];
-  return NO;
+  return [googleMapView didTapMarker:marker];
+}
+
+- (void)mapView:(GMSMapView *)mapView didChangeCameraPosition:(GMSCameraPosition *)position {
+  AIRGoogleMap *googleMapView = (AIRGoogleMap *)mapView;
+  [googleMapView didChangeCameraPosition:position];
+}
+
+- (void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
+  AIRGoogleMap *googleMapView = (AIRGoogleMap *)mapView;
+  [googleMapView idleAtCameraPosition:position];
 }
 
 @end

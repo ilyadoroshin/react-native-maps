@@ -16,6 +16,14 @@
 static double mercadorRadius = 85445659.44705395;
 static double mercadorOffset = 268435456;
 
+id cameraPositionAsJSON(GMSCameraPosition *position) {
+  return @{
+           @"latitude": [NSNumber numberWithDouble:position.target.latitude],
+           @"longitude": [NSNumber numberWithDouble:position.target.longitude],
+           @"zoom": [NSNumber numberWithDouble:position.zoom],
+           };
+}
+
 @implementation AIRGoogleMap
 {
   NSMutableArray<UIView *> *_reactSubviews;
@@ -70,18 +78,30 @@ static double mercadorOffset = 268435456;
 
 }
 
-- (void)didTapMarker:(GMSMarker *)marker {
-  printf("tap marker\n");
+- (BOOL)didTapMarker:(GMSMarker *)marker {
   AIRGMSMarker *airMarker = (AIRGMSMarker *)marker;
 
-  id event = @{@"action": @"marker-select",
+  id event = @{@"action": @"marker-press",
                @"id": airMarker.identifier ?: @"unknown",
               };
 
   if (airMarker.onPress) airMarker.onPress(event);
   if (self.onMarkerPress) self.onMarkerPress(event);
+  return NO;
 }
 
+- (void)didChangeCameraPosition:(GMSCameraPosition *)position {
+  id event = @{@"action": @"region-change",
+               @"region": cameraPositionAsJSON(position),
+               };
+  if (self.onRegionChange) self.onRegionChange(event);
+}
 
+- (void)idleAtCameraPosition:(GMSCameraPosition *)position {
+  id event = @{@"action": @"region-change-complete",
+               @"region": cameraPositionAsJSON(position),
+               };
+  if (self.onRegionChangeComplete) self.onRegionChangeComplete(event);
+}
 
 @end
