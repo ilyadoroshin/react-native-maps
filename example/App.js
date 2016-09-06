@@ -6,6 +6,7 @@ let {
   TouchableOpacity,
   ScrollView,
   Text,
+  Switch,
 } = ReactNative;
 const DisplayLatLng = require('./examples/DisplayLatLng');
 const ViewsAsMarkers = require('./examples/ViewsAsMarkers');
@@ -23,11 +24,17 @@ const CachedMap = require('./examples/CachedMap');
 const LoadingMap = require('./examples/LoadingMap');
 const TakeSnapshot = require('./examples/TakeSnapshot');
 const FitToSuppliedMarkers = require('./examples/FitToSuppliedMarkers');
+const MapView = require('react-native-maps');
+
+const { GoogleMapView } = MapView;
 
 const App = React.createClass({
 
   getInitialState() {
-    return { Component: null };
+    return {
+      Component: null,
+      useGoogleMaps: true,
+    };
   },
 
   renderExample([Component, title], i) {
@@ -53,17 +60,35 @@ const App = React.createClass({
     );
   },
 
+  renderGoogleSwitch() {
+    return (
+      <View>
+        <Text>Use GoogleMaps?</Text>
+        <Switch
+          onValueChange={(value) => this.setState({ useGoogleMaps: value })}
+          style={{ marginBottom: 10 }}
+          value={this.state.useGoogleMaps}
+        />
+      </View>
+    );
+  },
+
   renderExamples(examples) {
-    let { Component } = this.state;
+    const {
+      Component,
+      useGoogleMaps,
+    } = this.state;
+
     return (
       <View style={styles.container}>
-        {Component && <Component />}
+        {Component && <Component MapView={useGoogleMaps ? GoogleMapView : MapView} />}
         {Component && this.renderBackButton()}
         {!Component && (
           <ScrollView
             contentContainerStyle={styles.scrollview}
             showsVerticalScrollIndicator={false}
           >
+            {this.renderGoogleSwitch()}
             {examples.map(this.renderExample)}
           </ScrollView>
         )}

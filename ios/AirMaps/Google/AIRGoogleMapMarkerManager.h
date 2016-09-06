@@ -7,8 +7,6 @@
 //
 
 #import "RCTViewManager.h"
-#import <MapKit/MapKit.h>
-#import "RCTConvert+MapKit.h"
 
 @interface AIRGoogleMapMarkerManager : RCTViewManager
 
