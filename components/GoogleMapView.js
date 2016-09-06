@@ -429,7 +429,7 @@ const MapView = React.createClass({
       props = {
         ...this.props,
         region: null,
-        initialRegion: null,
+        // initialRegion: null,
         onChange: this._onChange,
         onMapReady: this._onMapReady,
         onLayout: this._onLayout,

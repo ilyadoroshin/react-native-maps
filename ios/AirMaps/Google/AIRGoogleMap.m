@@ -9,6 +9,12 @@
 #import "AIRGoogleMap.h"
 #import "AIRGoogleMapMarker.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import <MapKit/MapKit.h>
+#import "RCTConvert+MapKit.h"
+#import "UIView+React.h"
+
+static double mercadorRadius = 85445659.44705395;
+static double mercadorOffset = 268435456;
 
 @implementation AIRGoogleMap
 {
@@ -29,6 +35,8 @@
   if ([subview isKindOfClass:[AIRGoogleMapMarker class]]) {
     AIRGoogleMapMarker *marker = (AIRGoogleMapMarker*)subview;
     marker.realMarker.map = self;
+//    marker.realMarker.delegate = self;
+
 //    [self addAnnotation:(id <MKAnnotation>) subview];
 //  } else if ([subview isKindOfClass:[AIRMapPolyline class]]) {
 //    ((AIRMapPolyline *)subview).map = self;
@@ -43,9 +51,37 @@
 }
 
 - (void)setInitialRegion:(MKCoordinateRegion)initialRegion {
-  printf("XXooXX\n");
   _initialRegion = initialRegion;
+
+  // TODO: move to some utility lib?
+  static double maxGoogleLevels = -1.0;
+  if (maxGoogleLevels < 0.0)
+    maxGoogleLevels = log2(MKMapSizeWorld.width / 256.0);
+  CLLocationDegrees longitudeDelta = initialRegion.span.longitudeDelta;
+  CGFloat mapWidthInPixels = [UIScreen mainScreen].bounds.size.width; // TODO?: self.bounds.size.width;
+  double zoomScale = longitudeDelta * mercadorRadius * M_PI / (180.0 * mapWidthInPixels);
+  double zoomer = maxGoogleLevels - log2( zoomScale );
+  if ( zoomer < 0 ) zoomer = 0;
+
+  GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:initialRegion.center.latitude
+                                                          longitude:initialRegion.center.longitude
+                                                               zoom:zoomer];
+  self.camera = camera;
+
 }
+
+- (void)didTapMarker:(GMSMarker *)marker {
+  printf("tap marker\n");
+  AIRGMSMarker *airMarker = (AIRGMSMarker *)marker;
+
+  id event = @{@"action": @"marker-select",
+               @"id": airMarker.identifier ?: @"unknown",
+              };
+
+  if (airMarker.onPress) airMarker.onPress(event);
+  if (self.onMarkerPress) self.onMarkerPress(event);
+}
+
 
 
 @end

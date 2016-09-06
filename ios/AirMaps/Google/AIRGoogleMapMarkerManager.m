@@ -8,6 +8,8 @@
 
 #import "AIRGoogleMapMarkerManager.h"
 #import "AIRGoogleMapMarker.h"
+#import <MapKit/MapKit.h>
+#import "RCTConvert+MapKit.h"
 
 @implementation AIRGoogleMapMarkerManager
 
@@ -24,6 +26,8 @@ RCT_EXPORT_MODULE()
   return marker;
 }
 
+RCT_EXPORT_VIEW_PROPERTY(identifier, NSString)
 RCT_EXPORT_VIEW_PROPERTY(coordinate, CLLocationCoordinate2D)
+RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
 @end

@@ -1,1 +1,1 @@
-../../../../../node_modules/react-native-maps/ios/AirMaps/AIRMapPolylineManager.h
+../../../../../../ios/AirMaps/AIRMapPolylineManager.h

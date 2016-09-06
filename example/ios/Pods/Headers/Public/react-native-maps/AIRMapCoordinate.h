@@ -1,1 +1,1 @@
-../../../../../node_modules/react-native-maps/ios/AirMaps/AIRMapCoordinate.h
+../../../../../../ios/AirMaps/AIRMapCoordinate.h

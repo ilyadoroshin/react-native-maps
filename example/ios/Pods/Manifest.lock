@@ -7,7 +7,7 @@ PODS:
   - React (0.32.0):
     - React/Core (= 0.32.0)
   - react-native-maps (0.7.1):
-    - GoogleMaps
+    - GoogleMaps (= 2.0.1)
     - React
   - React/Core (0.32.0):
     - React/CSSLayout
@@ -33,7 +33,7 @@ PODS:
     - React/Core
 
 DEPENDENCIES:
-  - react-native-maps (from `../node_modules/react-native-maps`)
+  - react-native-maps (from `../../`)
   - React/Core (from `../node_modules/react-native`)
   - React/RCTActionSheet (from `../node_modules/react-native`)
   - React/RCTGeolocation (from `../node_modules/react-native`)
@@ -49,11 +49,11 @@ EXTERNAL SOURCES:
   React:
     :path: "../node_modules/react-native"
   react-native-maps:
-    :path: "../node_modules/react-native-maps"
+    :path: "../../"
 
 SPEC CHECKSUMS:
   GoogleMaps: f09da64fc987c1aa29394567c3cab5a3df83c402
   React: 0245b401173a94a5fba0f440aab3fb2f79b738f3
-  react-native-maps: 20396ef889c78256abfacacc66dea68642d9c882
+  react-native-maps: 121e41d640e2fa44a67901817612a922ac9bfbab
 
 COCOAPODS: 0.39.0

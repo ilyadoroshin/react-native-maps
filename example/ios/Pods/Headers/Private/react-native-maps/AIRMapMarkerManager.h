@@ -1,1 +1,1 @@
-../../../../../node_modules/react-native-maps/ios/AirMaps/AIRMapMarkerManager.h
+../../../../../../ios/AirMaps/AIRMapMarkerManager.h

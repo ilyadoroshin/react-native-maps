@@ -6,10 +6,13 @@
 //
 
 #import <GoogleMaps/GoogleMaps.h>
+#import "AIRGMSMarker.h"
 
 @interface AIRGoogleMapMarker : UIView
 
+@property (nonatomic, strong) NSString *identifier;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
-@property (nonatomic, strong) GMSMarker* realMarker;
+@property (nonatomic, strong) AIRGMSMarker* realMarker;
+@property (nonatomic, copy) RCTBubblingEventBlock onPress;
 
 @end
